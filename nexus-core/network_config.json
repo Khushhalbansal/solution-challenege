@@ -1,0 +1,119 @@
+{
+  "network_schema_version": "1.0.0",
+  "nodes": [
+    {
+      "node_id": "FAC-SHZ-01",
+      "node_type": "Factory",
+      "location": "Shenzhen, China",
+      "daily_capacity": 50000,
+      "base_risk_weight": 0.85,
+      "risk_factors": ["Geopolitical Trade Friction", "Trans-Pacific Export Bottlenecks"]
+    },
+    {
+      "node_id": "FAC-MTY-02",
+      "node_type": "Factory",
+      "location": "Monterrey, Mexico",
+      "daily_capacity": 25000,
+      "base_risk_weight": 0.20,
+      "risk_factors": ["Nearshoring Hub", "Border Crossing Minor Delays"]
+    },
+    {
+      "node_id": "DST-LAX-01",
+      "node_type": "Distributor",
+      "location": "Los Angeles Port, USA",
+      "max_inventory": 150000,
+      "current_stock": 42000,
+      "base_risk_weight": 0.92,
+      "risk_factors": ["Severe Berth Congestion", "Labor Union Volatility"]
+    },
+    {
+      "node_id": "DST-ROT-02",
+      "node_type": "Distributor",
+      "location": "Rotterdam, Netherlands",
+      "max_inventory": 200000,
+      "current_stock": 110000,
+      "base_risk_weight": 0.65,
+      "risk_factors": ["Suez Canal / Red Sea Rerouting Impacts"]
+    },
+    {
+      "node_id": "RET-CHI-01",
+      "node_type": "Retailer",
+      "location": "Chicago, USA",
+      "weekly_demand_forecast": 8000,
+      "base_risk_weight": 0.15,
+      "risk_factors": ["Midwest Weather Variability"]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "RTE-OCEAN-SHZ-LAX",
+      "source_node": "FAC-SHZ-01",
+      "target_node": "DST-LAX-01",
+      "transit_mode": "Ocean Freight",
+      "latency_days": 24.5,
+      "cost_per_mile_usd": 0.08,
+      "current_risk_score": 0.88,
+      "dynamic_modifiers": ["Pacific Storm Activity", "LAX Unloading Wait Times"]
+    },
+    {
+      "edge_id": "RTE-AIR-SHZ-LAX",
+      "source_node": "FAC-SHZ-01",
+      "target_node": "DST-LAX-01",
+      "transit_mode": "Air Freight",
+      "latency_days": 1.5,
+      "cost_per_mile_usd": 5.20,
+      "current_risk_score": 0.15,
+      "dynamic_modifiers": ["Aviation Fuel Costs"]
+    },
+    {
+      "edge_id": "RTE-RAIL-MTY-LAX",
+      "source_node": "FAC-MTY-02",
+      "target_node": "DST-LAX-01",
+      "transit_mode": "Rail",
+      "latency_days": 3.2,
+      "cost_per_mile_usd": 0.85,
+      "current_risk_score": 0.25,
+      "dynamic_modifiers": ["Customs Clearance"]
+    },
+    {
+      "edge_id": "RTE-OCEAN-SHZ-ROT",
+      "source_node": "FAC-SHZ-01",
+      "target_node": "DST-ROT-02",
+      "transit_mode": "Ocean Freight",
+      "latency_days": 38.0,
+      "cost_per_mile_usd": 0.12,
+      "current_risk_score": 0.95,
+      "dynamic_modifiers": ["Red Sea Conflict Avoidance Routing (Cape of Good Hope)"]
+    },
+    {
+      "edge_id": "RTE-TRUCK-LAX-CHI",
+      "source_node": "DST-LAX-01",
+      "target_node": "RET-CHI-01",
+      "transit_mode": "Truck",
+      "latency_days": 4.5,
+      "cost_per_mile_usd": 2.45,
+      "current_risk_score": 0.35,
+      "dynamic_modifiers": ["Highway Traffic", "Fuel Price Volatility"]
+    },
+    {
+      "edge_id": "RTE-RAIL-LAX-CHI",
+      "source_node": "DST-LAX-01",
+      "target_node": "RET-CHI-01",
+      "transit_mode": "Rail",
+      "latency_days": 6.0,
+      "cost_per_mile_usd": 0.90,
+      "current_risk_score": 0.10,
+      "dynamic_modifiers": ["Rail Yard Congestion"]
+    },
+    {
+      "edge_id": "RTE-AIR-ROT-CHI",
+      "source_node": "DST-ROT-02",
+      "target_node": "RET-CHI-01",
+      "transit_mode": "Air Freight",
+      "latency_days": 0.8,
+      "cost_per_mile_usd": 6.00,
+      "current_risk_score": 0.10,
+      "dynamic_modifiers": ["EU Export Tariffs"]
+    }
+  ]
+}
